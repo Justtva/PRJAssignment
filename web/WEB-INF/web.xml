@@ -8,6 +8,14 @@
         <servlet-name>LoginController</servlet-name>
         <servlet-class>controller.LoginController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ListShippersController</servlet-name>
+        <servlet-class>controller.ListShippersController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeleteController</servlet-name>
+        <servlet-class>controller.product.DeleteController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ListProductsController</servlet-name>
         <url-pattern>/list</url-pattern>
@@ -15,6 +23,14 @@
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
         <url-pattern>/logins</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ListShippersController</servlet-name>
+        <url-pattern>/listshipper</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteController</servlet-name>
+        <url-pattern>/product/delete</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
