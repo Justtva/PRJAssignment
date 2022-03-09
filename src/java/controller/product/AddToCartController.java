@@ -6,17 +6,22 @@
 package controller.product;
 
 import controller.BaseAuthController;
+import dal.ProductDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Order;
+import model.OrderDetail;
+import model.Product;
 
 /**
  *
  * @author Bi
  */
-public class DeleteController extends BaseAuthController {
+public class AddToCartController extends BaseAuthController {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,7 +45,7 @@ public class DeleteController extends BaseAuthController {
     @Override
     protected void processGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("delete.jsp").forward(request, response);
+
     }
 
     /**
@@ -54,7 +59,32 @@ public class DeleteController extends BaseAuthController {
     @Override
     protected void processPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
- 
+        int id = Integer.parseInt(request.getParameter("id"));
+        ProductDBContext db = new ProductDBContext();
+        Product product = db.getProduct(id);
+        
+        Order order = (Order)request.getSession().getAttribute("order");
+        if(order == null){
+            order = new Order();
+        }
+        boolean isExist = false;
+        for (OrderDetail detail : order.getDetails()) {
+            if(detail.getProduct().getId()==product.getId()){
+                isExist = true;
+                detail.setQuantity(detail.getQuantity() + 1);
+                break;
+            }
+        }
+        if(!isExist){
+            OrderDetail detail = new OrderDetail();
+            detail.setOrder(order);
+            detail.setProduct(product);
+            detail.setQuantity(1);
+            detail.setUnitPrice(product.getSell_price());
+            order.getDetails().add(detail);
+        }
+        request.getSession().setAttribute("order", order);
+        response.sendRedirect("../list");
     }
 
     /**

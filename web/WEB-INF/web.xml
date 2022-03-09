@@ -16,6 +16,18 @@
         <servlet-name>DeleteController</servlet-name>
         <servlet-class>controller.product.DeleteController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AddToCartController</servlet-name>
+        <servlet-class>controller.product.AddToCartController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CheckOutController</servlet-name>
+        <servlet-class>controller.product.CheckOutController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ConfirmOrderController</servlet-name>
+        <servlet-class>controller.ConfirmOrderController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ListProductsController</servlet-name>
         <url-pattern>/list</url-pattern>
@@ -31,6 +43,18 @@
     <servlet-mapping>
         <servlet-name>DeleteController</servlet-name>
         <url-pattern>/product/delete</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddToCartController</servlet-name>
+        <url-pattern>/product/cart</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CheckOutController</servlet-name>
+        <url-pattern>/product/checkout</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ConfirmOrderController</servlet-name>
+        <url-pattern>/confirmorder</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

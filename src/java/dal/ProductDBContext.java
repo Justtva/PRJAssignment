@@ -18,7 +18,8 @@ import model.Product;
  * @author Bi
  */
 public class ProductDBContext extends DBContext {
-     public ArrayList<Product> getProducts() {
+
+    public ArrayList<Product> getProducts() {
         ArrayList<Product> products = new ArrayList<>();
         try {
             String sql = "select pid, pname, import_price, sell_price, quantity from Products";
@@ -30,7 +31,7 @@ public class ProductDBContext extends DBContext {
                 p.setName(rs.getString("pname"));
                 p.setImport_price(rs.getFloat("import_price"));
                 p.setSell_price(rs.getFloat("sell_price"));
-                p.setQuantity(rs.getInt("quantity"));             
+                p.setQuantity(rs.getInt("quantity"));
                 products.add(p);
             }
         } catch (SQLException ex) {
@@ -47,5 +48,29 @@ public class ProductDBContext extends DBContext {
             }
         }
         return null;
+    }
+
+    public void updateProduct(Product p) {
+        String sql = "UPDATE [Products]\n"
+                + "   SET"
+                + "      [pname] = ?\n"
+                + "      ,[import_price] = ?\n"
+                + "      ,[sell_price] = ?\n"
+                + "      ,[quantity] = ?\n"
+                + " WHERE [pid]=?";
+
+        PreparedStatement stm = null;
+        try {
+            stm = connection.prepareStatement(sql);
+            stm.setInt(5, p.getId());
+            stm.setString(1, p.getName());
+            stm.setFloat(2, p.getImport_price());
+            stm.setFloat(3, p.getSell_price());
+            stm.setInt(4, p.getQuantity());
+
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

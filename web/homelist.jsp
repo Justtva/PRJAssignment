@@ -4,6 +4,7 @@
     Author     : Bi
 --%>
 
+<%@page import="model.Order"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="model.Product"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -14,6 +15,9 @@
         <title>JSP Page</title>
         <%
             ArrayList<Product> products = (ArrayList<Product>)request.getAttribute("products");
+            Order order = (Order)session.getAttribute("order");
+            if(order == null)
+                order = new Order();  
         %>
     </head>
     <body>
@@ -33,8 +37,17 @@
                 <td><%=p.getImport_price()%></td>
                 <td><%=p.getSell_price()%></td>
                 <td><%=p.getQuantity()%></td>
+                <td>
+                    <form action="product/cart" method="POST">
+                        <input type="hidden" value="<%=p.getId()%>" name="id"/>
+                        <input type="submit" value="Thêm"/>
+                    </form>
+                </td>
             </tr>
             <%}%>
         </table>
+        <form action="product/checkout">
+            <input type="submit" value="Thanh toán">
+        </form>
     </body>
 </html>
