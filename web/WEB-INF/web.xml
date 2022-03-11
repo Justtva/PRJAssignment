@@ -28,6 +28,14 @@
         <servlet-name>ConfirmOrderController</servlet-name>
         <servlet-class>controller.ConfirmOrderController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ImportController</servlet-name>
+        <servlet-class>controller.product.ImportController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CancelOrderController</servlet-name>
+        <servlet-class>controller.CancelOrderController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ListProductsController</servlet-name>
         <url-pattern>/list</url-pattern>
@@ -56,9 +64,17 @@
         <servlet-name>ConfirmOrderController</servlet-name>
         <url-pattern>/confirmorder</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ImportController</servlet-name>
+        <url-pattern>/product/import</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CancelOrderController</servlet-name>
+        <url-pattern>/cancelorder</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
-            30
+            300
         </session-timeout>
     </session-config>
 </web-app>
