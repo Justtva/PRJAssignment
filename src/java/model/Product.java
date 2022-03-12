@@ -29,7 +29,9 @@ public class Product {
         this.shipper = shipper;
     }
 
-   
+    public float getEarning(){
+        return sell_price-import_price;
+    }
 
 
 

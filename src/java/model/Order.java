@@ -13,8 +13,26 @@ import java.util.ArrayList;
  * @author Bi
  */
 public class Order {
+    private int id;
     private Date date;
+    private float earning;
     private ArrayList<OrderDetail> details = new ArrayList();
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public float getEarning() {
+        return earning;
+    }
+
+    public void setEarning(float earning) {
+        this.earning = earning;
+    }
 
     public int getSize(){
         int size=0;

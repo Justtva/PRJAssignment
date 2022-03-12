@@ -3,9 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller;
+package controller.product;
 
-import dal.OrderDBContext;
 import dal.ProductDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -14,14 +13,13 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.Order;
 import model.Product;
 
 /**
  *
  * @author Bi
  */
-public class ListProductsController extends BaseAuthController {
+public class DetailListController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,13 +32,10 @@ public class ListProductsController extends BaseAuthController {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ProductDBContext productDB = new ProductDBContext();
-        ArrayList<Product> products = productDB.getProductsBySid(-1);
-        OrderDBContext orderDB = new OrderDBContext();
-        ArrayList<Order> orders = orderDB.getOrders();
-        request.setAttribute("orders", orders);
+        ProductDBContext db = new ProductDBContext();
+        ArrayList<Product> products = db.getProductsBySid(-1);
         request.setAttribute("products", products);
-        request.getRequestDispatcher("homelist.jsp").forward(request, response);
+        request.getRequestDispatcher("../productdetail.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -53,7 +48,7 @@ public class ListProductsController extends BaseAuthController {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void processGet(HttpServletRequest request, HttpServletResponse response)
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
@@ -67,7 +62,7 @@ public class ListProductsController extends BaseAuthController {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void processPost(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }

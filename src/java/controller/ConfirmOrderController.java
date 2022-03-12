@@ -5,9 +5,11 @@
  */
 package controller;
 
+import dal.OrderDBContext;
 import dal.ProductDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Date;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -59,21 +61,35 @@ public class ConfirmOrderController extends BaseAuthController {
             throws ServletException, IOException {
         Order order = (Order) request.getSession().getAttribute("order");
         ProductDBContext productDB = new ProductDBContext();
-        ArrayList<Product> products = productDB.getProducts();
+        OrderDBContext orderDB = new OrderDBContext();
+        ArrayList<Product> products = productDB.getProductsBySid(-1);
+        float earning = 0;
         for (Product product : products) {
             for (OrderDetail detail : order.getDetails()) {
-                if (detail.getProduct().getName().equals(product.getName())) {
+                if(detail.getProduct().getName().equals(product.getName()) && (product.getQuantity() - detail.getQuantity())<0){
+                    request.setAttribute("alertMsg", "Số lượng bán vượt quá số lượng còn");
+                }else if (detail.getProduct().getName().equals(product.getName())) {
                     product.setId(product.getId());
-                    product.setImport_price(product.getImport_price());
-                    product.setQuantity(product.getQuantity() - detail.getQuantity());
                     product.setName(product.getName());
+                    product.setImport_price(product.getImport_price());
                     product.setSell_price(product.getSell_price());
+                    product.setQuantity(product.getQuantity() - detail.getQuantity());
+                    product.setExpireDate(product.getExpireDate());
+                    product.setImportDate(product.getImportDate());
+                    product.setShipper(product.getShipper());
                     productDB.updateProduct(product);
+                    earning+=(product.getEarning())*detail.getQuantity();
                 }
             }
         }
+        long millis = System.currentTimeMillis();
+        Date date = new Date(millis);
+        order.setDate(date);
+        order.setEarning(earning);
+        orderDB.insertOrder(order);
+
         request.getSession().setAttribute("order", null);
-        response.sendRedirect("list");
+        request.getRequestDispatcher("list").forward(request, response);
     }
 
     /**

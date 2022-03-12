@@ -15,23 +15,33 @@
         <%
             ArrayList<Shipper> shippers = (ArrayList<Shipper>) request.getAttribute("shippers");
         %>
-    </head>
-    <body>
-        <table border="1px">
-            <tr>
-                <td>Mã số</td>
-                <td>Tên</td>
-                <td>Số điện thoại</td>
-                <td>Địa chỉ</td>
-            </tr>
-            <%for (Shipper s : shippers) {%>
-            <tr>
-                <td><%=s.getId()%></td>
-                <td><%=s.getName()%></td>
-                <td><%=s.getNumber()%></td>
-                <td><%=s.getAddress()%></td>
-            </tr>
-            <%}%>   
-        </table>
-    </body>
+    <h1>ĐẠI LÝ</h1>
+    <table>
+        <tr><a href="../list"> Cửa hàng</tr>
+            <tr><a href="product/import">Nhập hàng</a></tr>
+            <tr><a href="listshipper">Đại lý</a></tr>
+            <tr><a href="product/detaillist">Kho hàng</a></tr>   
+    </table>
+    <a href="shipper/insert">Thêm giao hàng mới</a>
+
+</head>
+<body>
+
+    <table border="1px">
+        <tr>
+            <td>Mã số</td>
+            <td>Tên</td>
+            <td>Số điện thoại</td>
+            <td>Địa chỉ</td>
+        </tr>
+        <%for (Shipper s : shippers) {%>
+        <tr>
+            <td><%=s.getId()%></td>
+            <td><%=s.getName()%></td>
+            <td><%=s.getNumber()%></td>
+            <td><%=s.getAddress()%></td>
+        </tr>
+        <%}%>   
+    </table>
+</body>
 </html>

@@ -51,7 +51,7 @@ public class ImportController extends HttpServlet {
             throws ServletException, IOException {
         ShipperDBContext db = new ShipperDBContext();
         ArrayList<Shipper> shippers = db.getShippers();
-        request.setAttribute("shippers", shippers);  
+        request.setAttribute("shippers", shippers);
         request.getRequestDispatcher("../import.jsp").forward(request, response);
     }
 
@@ -72,33 +72,30 @@ public class ImportController extends HttpServlet {
         String raw_export_price = request.getParameter("sell_price");
         String raw_expire_date = request.getParameter("expired_date");
         String raw_sid = request.getParameter("sid");
-        
+
         ProductDBContext db = new ProductDBContext();
-        ArrayList<Product> products = new ArrayList<>();
-        int pid = 
-        
-        
-        long millis=System.currentTimeMillis();
+
+        long millis = System.currentTimeMillis();
+        Date import_date = new Date(millis);
         String pname = raw_pname;
         float import_price = Float.parseFloat(raw_import_price);
         int quantity = Integer.parseInt(raw_quantity);
         float export_price = Float.parseFloat(raw_export_price);
-        Date import_date = new Date(millis);
+        
         Date expire_date = Date.valueOf(raw_expire_date);
         int sid = Integer.parseInt(raw_sid);
-        
+
         Shipper s = new Shipper();
         s.setId(sid);
         Product p = new Product();
         p.setShipper(s);
-        p.setId(pid);
         p.setName(pname);
         p.setImport_price(import_price);
         p.setQuantity(quantity);
         p.setSell_price(export_price);
         p.setImportDate(import_date);
         p.setExpireDate(expire_date);
-        
+
         db.importProduct(p);
         response.sendRedirect("../list");
     }

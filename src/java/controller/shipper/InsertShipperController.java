@@ -3,25 +3,22 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller;
+package controller.shipper;
 
-import dal.OrderDBContext;
-import dal.ProductDBContext;
+import dal.ShipperDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.Order;
-import model.Product;
+import model.Shipper;
 
 /**
  *
  * @author Bi
  */
-public class ListProductsController extends BaseAuthController {
+public class InsertShipperController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,13 +31,19 @@ public class ListProductsController extends BaseAuthController {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ProductDBContext productDB = new ProductDBContext();
-        ArrayList<Product> products = productDB.getProductsBySid(-1);
-        OrderDBContext orderDB = new OrderDBContext();
-        ArrayList<Order> orders = orderDB.getOrders();
-        request.setAttribute("orders", orders);
-        request.setAttribute("products", products);
-        request.getRequestDispatcher("homelist.jsp").forward(request, response);
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet InsertShipperController</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet InsertShipperController at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -53,9 +56,9 @@ public class ListProductsController extends BaseAuthController {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void processGet(HttpServletRequest request, HttpServletResponse response)
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        request.getRequestDispatcher("../insertshipper.jsp").forward(request, response);
     }
 
     /**
@@ -67,9 +70,27 @@ public class ListProductsController extends BaseAuthController {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void processPost(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String raw_name = request.getParameter("name");
+        String raw_number = request.getParameter("number");
+        String raw_address = request.getParameter("address");
+        String raw_id = request.getParameter("id");
+        
+        int id = Integer.parseInt(raw_id);
+        String name = raw_name;
+        String number = raw_number;
+        String address = raw_address;
+        
+        Shipper s = new Shipper();
+        s.setId(id);
+        s.setName(name);
+        s.setAddress(address);
+        s.setNumber(number);
+        
+        ShipperDBContext db = new ShipperDBContext();
+        db.insertShipper(s);
+        response.sendRedirect("../listshipper");
     }
 
     /**

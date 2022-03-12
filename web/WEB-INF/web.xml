@@ -36,6 +36,18 @@
         <servlet-name>CancelOrderController</servlet-name>
         <servlet-class>controller.CancelOrderController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>InsertShipperController</servlet-name>
+        <servlet-class>controller.shipper.InsertShipperController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ViewShipperController</servlet-name>
+        <servlet-class>controller.shipper.ViewShipperController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DetailListController</servlet-name>
+        <servlet-class>controller.product.DetailListController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ListProductsController</servlet-name>
         <url-pattern>/list</url-pattern>
@@ -71,6 +83,18 @@
     <servlet-mapping>
         <servlet-name>CancelOrderController</servlet-name>
         <url-pattern>/cancelorder</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>InsertShipperController</servlet-name>
+        <url-pattern>/shipper/insert</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewShipperController</servlet-name>
+        <url-pattern>/shipper/view</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DetailListController</servlet-name>
+        <url-pattern>/product/detaillist</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

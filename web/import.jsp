@@ -18,6 +18,7 @@
         
         %>
     </head>
+    <h1>NHẬP HÀNG</h1>
     <body>
         <form action="../product/import" method="post">
             Tên hàng:<input type="text" name="pname"></br>
