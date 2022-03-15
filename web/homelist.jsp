@@ -38,6 +38,7 @@
         <tr><a href="product/import">Nhập hàng</a></tr>
     <tr><a href="listshipper">Đại lý</a></tr>
 <tr><a href="product/detaillist">Kho hàng</a></tr>
+<tr><a href="order/list">Lịch sử bán hàng</a></tr>
 </table>
 
 <body>
@@ -55,7 +56,6 @@
             <td>Đại lý</td>
             <td>Hạn sử dụng</td>
             <td>Số lượng còn</td>
-
         </tr>
         <%for (Product p : products) {%>
         <tr>
@@ -71,6 +71,9 @@
                     <input type="submit" value="Thêm"/>
                 </form>
             </td>
+            <%if (p.getExpireDate().toString().equals(todaydate)) {%>
+            <td>Hết hạn</td>
+            <%}%>
         </tr>
         <%}%>
     </table>

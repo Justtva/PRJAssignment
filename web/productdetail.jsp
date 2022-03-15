@@ -15,6 +15,15 @@
         <%
             ArrayList<Product> products = (ArrayList<Product>) request.getAttribute("products");
         %>
+        <script>
+           
+            function deleteProduct(id){
+                var result = confirm("Xác nhận xóa hàng!");
+                if(result){
+                    window.location.href='delete?id='+id;
+                }
+            }
+        </script>
     </head>
     <h1>KHO HÀNG</h1>
     <table>
@@ -46,7 +55,8 @@
                 <td><%=p.getImportDate()%></td>
                 <td><%=p.getExpireDate()%></td>
                 <td><%=p.getQuantity()%></td>
-
+                <td><a href="update?id=<%=p.getId()%>">Sửa</td>
+                <td><a href="#" onclick="deleteProduct(<%=p.getId()%>)">Xóa</td>
             </tr>
             <%}%>
         </table>

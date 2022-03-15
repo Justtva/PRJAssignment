@@ -13,10 +13,6 @@
         <servlet-class>controller.ListShippersController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>DeleteController</servlet-name>
-        <servlet-class>controller.product.DeleteController</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>AddToCartController</servlet-name>
         <servlet-class>controller.product.AddToCartController</servlet-class>
     </servlet>
@@ -48,6 +44,18 @@
         <servlet-name>DetailListController</servlet-name>
         <servlet-class>controller.product.DetailListController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>UpdateController</servlet-name>
+        <servlet-class>controller.product.UpdateController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeleteController</servlet-name>
+        <servlet-class>controller.product.DeleteController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ListOrderController</servlet-name>
+        <servlet-class>controller.order.ListOrderController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ListProductsController</servlet-name>
         <url-pattern>/list</url-pattern>
@@ -59,10 +67,6 @@
     <servlet-mapping>
         <servlet-name>ListShippersController</servlet-name>
         <url-pattern>/listshipper</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>DeleteController</servlet-name>
-        <url-pattern>/product/delete</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>AddToCartController</servlet-name>
@@ -95,6 +99,18 @@
     <servlet-mapping>
         <servlet-name>DetailListController</servlet-name>
         <url-pattern>/product/detaillist</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateController</servlet-name>
+        <url-pattern>/product/update</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteController</servlet-name>
+        <url-pattern>/product/delete</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ListOrderController</servlet-name>
+        <url-pattern>/order/list</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

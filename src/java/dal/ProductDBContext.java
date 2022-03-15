@@ -86,11 +86,30 @@ public class ProductDBContext extends DBContext {
     }
 
     public Product getProduct(int id) {
-        ArrayList<Product> products = getProducts();
-        for (Product product : products) {
-            if (product.getId() == id) {
-                return product;
+        try {
+            String sql = "select p.pid, p.pname, p.import_price, p.sell_price, p.quantity, p.import_date, p.expire_date, p.sid\n"
+                    + "from Product p inner join Shipper s\n"
+                    + "on p.sid = s.sid\n"
+                    + "Where p.pid = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, id);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                Product p = new Product();
+                Shipper s = new Shipper();
+                s.setId(rs.getInt("sid"));
+                p.setId(rs.getInt("pid"));
+                p.setName(rs.getString("pname"));
+                p.setShipper(s);
+                p.setImport_price(rs.getFloat("import_price"));
+                p.setSell_price(rs.getFloat("sell_price"));
+                p.setQuantity(rs.getInt("quantity"));
+                p.setImportDate(rs.getDate("import_date"));
+                p.setExpireDate(rs.getDate("expire_date"));
+                return p;
             }
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
@@ -163,6 +182,20 @@ public class ProductDBContext extends DBContext {
             stm.setDate(6, p.getExpireDate());
             stm.setInt(7, p.getShipper().getId());
 
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void deleteProduct(Product p) {
+        try {
+            String sql = "DELETE FROM Product WHERE [pid] = ?";
+            
+            PreparedStatement stm = null;
+            
+            stm = connection.prepareStatement(sql);
+            stm.setInt(1, p.getId());
             stm.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(ProductDBContext.class.getName()).log(Level.SEVERE, null, ex);

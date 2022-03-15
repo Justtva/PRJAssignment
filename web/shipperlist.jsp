@@ -17,7 +17,7 @@
         %>
     <h1>ĐẠI LÝ</h1>
     <table>
-        <tr><a href="../list"> Cửa hàng</tr>
+        <tr><a href="list"> Cửa hàng</tr>
             <tr><a href="product/import">Nhập hàng</a></tr>
             <tr><a href="listshipper">Đại lý</a></tr>
             <tr><a href="product/detaillist">Kho hàng</a></tr>   
