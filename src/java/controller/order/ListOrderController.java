@@ -7,7 +7,6 @@ package controller.order;
 
 import dal.OrderDBContext;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -33,8 +32,21 @@ public class ListOrderController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         OrderDBContext db = new OrderDBContext();
-        ArrayList<Order> orders = db.getOrders();
+        int pagesize = 10;
+        String page = request.getParameter("page");   
+        if(page==null || page.trim().length()==0){
+            page="1";
+        }
+        int pageIndex = Integer.parseInt(page);
+        ArrayList<Order> orders = db.getOrdersPaging(pageIndex, pagesize);
         request.setAttribute("orders", orders);
+        
+        int count = db.count();
+        int totalpage = (count%pagesize==0)  ? (count/pagesize) : (count/pagesize)+1;
+        request.setAttribute("totalpage", totalpage);
+        request.setAttribute("pageindex", pageIndex);
+        
+        
         request.getRequestDispatcher("../orderlist.jsp").forward(request, response);
         
     }

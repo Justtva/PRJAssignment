@@ -14,7 +14,11 @@
         <title>JSP Page</title>
         <%
             ArrayList<Order> orders = (ArrayList<Order>) request.getAttribute("orders");
+            Integer pageindex = (Integer) request.getAttribute("pageindex");
+            Integer totalpage = (Integer) request.getAttribute("totalpage");
         %>
+        <script src="../jss/pagger.js" type="text/javascript"></script>
+        <link href="../css/pagger.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
         <table border="1px">
@@ -30,7 +34,10 @@
                 <td><%=o.getEarning()%></td>
             </tr>
             <%}%>
-
         </table>
+        <div id="container" class="pagger"></div>
+        <script>
+            pagger("container",<%=pageindex%>,<%=totalpage%>,2);
+        </script>
     </body>
 </html>

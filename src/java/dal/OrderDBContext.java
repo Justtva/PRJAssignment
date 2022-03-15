@@ -23,13 +23,13 @@ public class OrderDBContext extends DBContext {
     public ArrayList<Order> getOrders() {
         ArrayList<Order> orders = new ArrayList<>();
         removeOldOrder();
-        try {          
+        try {
             String sql = "select oid, date, earning\n"
-                    + "from [Order]";
+                    + "from [Order] order by date desc";
             PreparedStatement stm = null;
-            stm=connection.prepareStatement(sql);
+            stm = connection.prepareStatement(sql);
             ResultSet rs = stm.executeQuery();
-            while (rs.next()){
+            while (rs.next()) {
                 Order o = new Order();
                 o.setId(rs.getInt("oid"));
                 o.setDate(rs.getDate("date"));
@@ -41,17 +41,61 @@ public class OrderDBContext extends DBContext {
         }
         return orders;
     }
-    public void removeOldOrder(){
-        try {          
+
+    public ArrayList<Order> getOrdersPaging(int pageindex, int pagesize) {
+        ArrayList<Order> orders = new ArrayList<>();
+        removeOldOrder();
+        try {
+            String sql = "SELECT oid, date, earning FROM\n"
+                    + "	(SELECT *,ROW_NUMBER() OVER (ORDER BY date desc) as row_index FROM [Order]) tb1\n"
+                    + "	 WHERE row_index >= (?-1)*? +1\n"
+                    + "	 AND row_index <= ? * ?";
+            PreparedStatement stm = null;
+            stm = connection.prepareStatement(sql);
+            stm.setInt(1, pageindex);
+            stm.setInt(2, pagesize);
+            stm.setInt(3, pageindex);
+            stm.setInt(4, pagesize);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                Order o = new Order();
+                o.setId(rs.getInt("oid"));
+                o.setDate(rs.getDate("date"));
+                o.setEarning(rs.getFloat("earning"));
+                orders.add(o);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return orders;
+    }
+    
+    public int count() {       
+        try {
+            String sql = "SELECT COUNT(*) as Total FROM [Order]";
+            PreparedStatement stm = null;
+            stm = connection.prepareStatement(sql);
+            
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("Total");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return -1;
+    }
+    public void removeOldOrder() {
+        try {
             String sql = "delete from [Order] where DATEDIFF(DAY,[Order].[date],GETDATE()) > 365";
             PreparedStatement stm = null;
-            stm=connection.prepareStatement(sql);
+            stm = connection.prepareStatement(sql);
             ResultSet rs = stm.executeQuery();
         } catch (SQLException ex) {
             Logger.getLogger(OrderDBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public void insertOrder(Order o) {
         try {
             String sql = "INSERT INTO [Order]\n"
