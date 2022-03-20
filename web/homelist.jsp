@@ -57,7 +57,7 @@
             </div>
 
             <div class="row">
-                <div class="col-8">
+                <div class="col-9">
                     <table class="table table-hover">
                         <thead class="table-primary fw-bold">
                             <tr>
@@ -100,7 +100,7 @@
                     </table>
                 </div>
 
-                <div class="col-4">
+                <div class="col-3">
                     <%if (order.getDetails().size() != 0) {%>
                     <div class="sticky-top">
                         <table class="table table-hover">

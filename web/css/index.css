@@ -25,6 +25,10 @@ body {
     height: 128px;
 }
 
+.buttonHolder{
+    text-align: center;
+}
+
 .card_background img {
     object-fit: contain;
     height: 100%;
